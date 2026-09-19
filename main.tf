@@ -2,7 +2,7 @@ resource "aws_s3_bucket" "example" {
   bucket = "my-qs-test-bucket"
 
   tags = {
-    Name        = "my-qs-test-bucket"
+    Name        = "qs-en-${var.environment}-test-bucket"
     Environment = "development"
   }
 }
