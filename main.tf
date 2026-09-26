@@ -12,13 +12,13 @@ resource "aws_quicksight_data_source" "redshift" {
       database = data.aws_redshiftserverless_namespace.dev.db_name
     }
   }
-  
+
   credentials {
-  credential_pair {
-    username = var.redshift_username
-    password = var.redshift_password
+    credential_pair {
+      username = var.redshift_username
+      password = var.redshift_password
+    }
   }
-}
 
   vpc_connection_properties {
     vpc_connection_arn = var.quicksight_vpc_connection_arn
@@ -123,7 +123,7 @@ resource "aws_quicksight_template" "customers" {
       arn = data.aws_quicksight_analysis.customers.arn
 
       data_set_references {
-        data_set_arn        = aws_quicksight_data_set.customers.arn
+        data_set_arn         = aws_quicksight_data_set.customers.arn
         data_set_placeholder = "dev-customers-dataset"
       }
     }
@@ -166,10 +166,12 @@ resource "aws_quicksight_dashboard" "customers" {
     actions = [
       "quicksight:DescribeDashboard",
       "quicksight:ListDashboardVersions",
-      "quicksight:UpdateDashboard",
+      "quicksight:UpdateDashboardPermissions",
       "quicksight:QueryDashboard",
-      "quicksight:DescribeDashboardPermissions",
-      "quicksight:UpdateDashboardPermissions"
+      "quicksight:UpdateDashboard",
+      "quicksight:DeleteDashboard",
+      "quicksight:UpdateDashboardPublishedVersion",
+      "quicksight:DescribeDashboardPermissions"
     ]
   }
 }
