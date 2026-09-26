@@ -141,3 +141,35 @@ resource "aws_quicksight_template" "customers" {
     ]
   }
 }
+
+resource "aws_quicksight_dashboard" "customers" {
+  aws_account_id = data.aws_caller_identity.current.account_id
+
+  dashboard_id        = "dev-customers-dashboard"
+  name                = "dev-customers-dashboard"
+  version_description = "Initial DEV dashboard"
+
+  source_entity {
+    source_template {
+      arn = aws_quicksight_template.customers.arn
+
+      data_set_references {
+        data_set_arn         = aws_quicksight_data_set.customers.arn
+        data_set_placeholder = "dev-customers-dataset"
+      }
+    }
+  }
+
+  permissions {
+    principal = "arn:aws:quicksight:us-east-1:801333664304:user/default/jasvik"
+
+    actions = [
+      "quicksight:DescribeDashboard",
+      "quicksight:ListDashboardVersions",
+      "quicksight:UpdateDashboard",
+      "quicksight:QueryDashboard",
+      "quicksight:DescribeDashboardPermissions",
+      "quicksight:UpdateDashboardPermissions"
+    ]
+  }
+}
