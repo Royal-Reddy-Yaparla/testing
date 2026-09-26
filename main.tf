@@ -42,7 +42,17 @@ resource "aws_quicksight_data_set" "customers" {
   name        = "dev-customers-dataset"
 
   import_mode = "DIRECT_QUERY"
+  permissions {
+    principal = "arn:aws:quicksight:us-east-1:801333664304:user/default/jasvik"
 
+    actions = [
+      "quicksight:DescribeDataSet",
+      "quicksight:DescribeDataSetPermissions",
+      "quicksight:PassDataSet",
+      "quicksight:DescribeIngestion",
+      "quicksight:ListIngestions"
+    ]
+  }
   physical_table_map {
     physical_table_map_id = "customers"
 
