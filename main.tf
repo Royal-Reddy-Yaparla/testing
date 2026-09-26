@@ -34,3 +34,69 @@ resource "aws_quicksight_data_source" "redshift" {
     ]
   }
 }
+
+resource "aws_quicksight_data_set" "customers" {
+  aws_account_id = data.aws_caller_identity.current.account_id
+
+  data_set_id = "dev-customers-dataset"
+  name        = "dev-customers-dataset"
+
+  import_mode = "DIRECT_QUERY"
+
+  physical_table_map {
+    physical_table_map_id = "customers"
+
+    relational_table {
+      data_source_arn = aws_quicksight_data_source.redshift.arn
+
+      catalog = "dev"
+      schema  = "public"
+      name    = "customers"
+
+      input_columns {
+        name = "name"
+        type = "STRING"
+      }
+
+      input_columns {
+        name = "age"
+        type = "INTEGER"
+      }
+
+      input_columns {
+        name = "sex"
+        type = "STRING"
+      }
+
+      input_columns {
+        name = "address"
+        type = "STRING"
+      }
+
+      input_columns {
+        name = "mobile_number"
+        type = "STRING"
+      }
+
+      input_columns {
+        name = "has_netflix_subscription"
+        type = "BOOLEAN"
+      }
+
+      input_columns {
+        name = "netflix_plan"
+        type = "STRING"
+      }
+
+      input_columns {
+        name = "subscription_start_date"
+        type = "DATETIME"
+      }
+
+      input_columns {
+        name = "subscription_end_date"
+        type = "DATETIME"
+      }
+    }
+  }
+}
