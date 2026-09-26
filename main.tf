@@ -1,14 +1,19 @@
-resource "aws_s3_bucket" "example" {
-  bucket = "qs-en-${var.environment}-test-bucket"
+resource "aws_quicksight_data_source" "redshift" {
+  data_source_id = "dev-redshift-datasource"
+  name           = "dev-redshift-datasource"
+  type           = "REDSHIFT"
 
-  tags = {
-    Name        = "qs-en-${var.environment}-test-bucket"
-    Environment = "development"
+  aws_account_id = data.aws_caller_identity.current.account_id
+
+  parameters {
+    redshift {
+      host     = data.aws_redshiftserverless_workgroup.dev.endpoint[0].address
+      port     = data.aws_redshiftserverless_workgroup.dev.endpoint[0].port
+      database = data.aws_redshiftserverless_namespace.dev.db_name
+    }
   }
-}
 
-
-variable "environment" {
-  type    = string
-  default = "dev"
+  vpc_connection_properties {
+    vpc_connection_arn = var.quicksight_vpc_connection_arn
+  }
 }
