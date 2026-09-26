@@ -13,6 +13,13 @@ resource "aws_quicksight_data_source" "redshift" {
     }
   }
 
+  credentials {
+  credential_pair {
+    username = var.redshift_username
+    password = var.redshift_password
+  }
+}
+
   vpc_connection_properties {
     vpc_connection_arn = var.quicksight_vpc_connection_arn
   }

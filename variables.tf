@@ -19,3 +19,14 @@ variable "quicksight_vpc_connection_arn" {
   default     = "arn:aws:quicksight:us-east-1:801333664304:vpcConnection/90918b5d-1114-429f-a9d8-32477b584582"
 }
 
+variable "redshift_username" {
+  description = "Username for the Redshift database."
+  type        = string
+}
+
+
+variable "redshift_password" {
+  description = "Password for the Redshift database."
+  type        = string
+  sensitive   = true
+}
