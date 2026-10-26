@@ -1,3 +1,13 @@
+resource "aws_s3_bucket" "example" {
+  bucket = "my-akr-test-bucket"
+
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+}
+
+
 # resource "aws_quicksight_data_source" "redshift" {
 #   data_source_id = "dev-redshift-datasource"
 #   name           = "dev-redshift-datasource"
